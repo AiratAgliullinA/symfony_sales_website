@@ -1,0 +1,18 @@
+{#
+# Header widget
+#}
+
+<div class="header">
+    <div class="header__site-name">Ads site</div>
+    <div class="header__user">
+        {% if user %}
+            <div class="header__user_authorized">
+            </div>
+        {% else %}
+            <div class="header__user_unauthorized">
+                <a href="{{ path('app_login') }}">Login</a>
+                <a href="{{ path('app_register') }}">Registration</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
