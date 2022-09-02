@@ -1,13 +1,5 @@
-@import "~bootstrap/scss/bootstrap";
-
-$main-color-green: #4ECDC4;
-$main-color-gray: #EEEEEE;
-$main-color-dark: #000000;
-$gutter-big: 30px;
-$gutter-medium: 20px;
-$gutter-default: 10px;
-$font-size-medium: 24px;
-$font-size-default: 16px;
+@import '~bootstrap/scss/bootstrap';
+@import 'variables.scss';
 
 body {
   background: $main-color-gray;
@@ -17,21 +9,29 @@ body {
 
 a {
   color: $main-color-dark;
+  &:hover {
+    color: $main-color-dark;
+  }
 }
 
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background: $main-color-green;
   padding: $gutter-medium $gutter-big;
+  min-height: 100px;
   &__site-name {
     font-size: $font-size-medium;
+    color: $main-color-gray;
   }
   &__user {
     &_unauthorized {
       display: grid;
       grid-auto-flow: column;
+      a {
+        color: $main-color-gray;
+      }
       gap: $gutter-default;
     }
   }

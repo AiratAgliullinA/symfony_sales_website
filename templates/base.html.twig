@@ -15,8 +15,12 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}
+        {% block header %}
             {{ render(controller('App\\Controller\\HeaderController:index')) }}
         {% endblock %}
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
     </body>
 </html>
