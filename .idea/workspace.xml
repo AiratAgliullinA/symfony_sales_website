@@ -17,6 +17,11 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpServers">
+    <servers>
+      <server host="127.0.0.1:8000" id="c93c1be2-1330-4ec5-a220-bd23fa1eb7ed" name="127.0.0.1:8000" port="8000" />
+    </servers>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
@@ -153,6 +158,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/vendor/symfony/expression-language" />
       <path value="$PROJECT_DIR$/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
     </include_path>
   </component>
   <component name="ProjectId" id="2ECTytqBEsMy5UMXxosXOVXq8ig" />
@@ -161,16 +167,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/airo/Sites/symfony_sales_website&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;web-ide.project.structure&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/airo/Sites/symfony_sales_website",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "web-ide.project.structure",
+    "ts.external.directory.path": "/Applications/PhpStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -191,7 +199,7 @@
       <option name="presentableId" value="Default" />
       <updated>1662098824344</updated>
       <workItem from="1662098826864" duration="3106000" />
-      <workItem from="1662102641797" duration="5054000" />
+      <workItem from="1662102641797" duration="8642000" />
     </task>
     <servers />
   </component>
