@@ -9,29 +9,35 @@ body {
 
 a {
   color: $main-color-dark;
+  text-decoration: unset;
   &:hover {
     color: $main-color-dark;
   }
+  &.inverse {
+    color: $main-color-gray;
+  }
+}
+
+.container {
+  margin-top: $gutter-medium;
 }
 
 .header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: $gutter-default;
   justify-content: space-around;
   background: $main-color-green;
   padding: $gutter-medium $gutter-big;
   min-height: 100px;
   &__site-name {
     font-size: $font-size-medium;
-    color: $main-color-gray;
   }
   &__user {
     &_unauthorized {
       display: grid;
       grid-auto-flow: column;
-      a {
-        color: $main-color-gray;
-      }
       gap: $gutter-default;
     }
   }

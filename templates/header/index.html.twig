@@ -3,7 +3,7 @@
 #}
 
 <div class="header">
-    <div class="header__site-name">ADVERTISEMENTS</div>
+    <div class="header__site-name"><a href="{{ path('app_home') }}" class="inverse">ADVERTISEMENTS</a></div>
     <div class="header__user">
         {% if user %}
             <div class="header__user_authorized dropdown">
@@ -16,8 +16,8 @@
             </div>
         {% else %}
             <div class="header__user_unauthorized">
-                <a href="{{ path('app_login') }}">Login</a>
-                <a href="{{ path('app_register') }}">Registration</a>
+                <a class="inverse" href="{{ path('app_login') }}">Login</a>
+                <a class="inverse" href="{{ path('app_register') }}">Registration</a>
             </div>
         {% endif %}
     </div>
