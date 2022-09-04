@@ -1,0 +1,24 @@
+{#
+# User products
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}My Ads{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="user-products">
+        <h1 class="user-products__title">My Ads</h1>
+        <div class="user-products__actions">
+            <a class="user-products__actions-link btn btn-primary" href="{{ path('app_add_user_product') }}">
+                Add advertisement
+            </a>
+        </div>
+        <div class="user-products__list">
+        </div>
+    </div>
+{% endblock %}
