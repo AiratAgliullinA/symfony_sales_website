@@ -1,5 +1,31 @@
+@import '~bootstrap/scss/bootstrap';
 @import 'variables.scss';
 
 .products-list {
   margin-top: $gutter-medium;
+  display: grid;
+  gap: $gutter-medium;
+  .product-item {
+    border: $border-width solid $main-color-dark-gray;
+    border-radius: $border-radius;
+    padding: $gutter-default;
+    text-align: center;
+    display: grid;
+    gap: $gutter-default;
+    &__name {
+      font-size: $font-size-medium;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .products-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .products-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

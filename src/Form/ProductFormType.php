@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Product;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Product form
@@ -29,13 +30,25 @@ class ProductFormType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'label' => 'Name',
-                    'required' => true
+                    'required' => true,
+                    'constraints' => [
+                        new Length([
+                            'max' => 255,
+                            'maxMessage' => 'Maximum length {{ limit }} characters'
+                        ])
+                    ]
                 ]
             )
             ->add('shortDescription', TextareaType::class,
                 [
                     'label' => 'Short description',
-                    'required' => true
+                    'required' => true,
+                    'constraints' => [
+                        new Length([
+                            'max' => 512,
+                            'maxMessage' => 'Maximum length {{ limit }} characters'
+                        ])
+                    ]
                 ]
             )->add('save', SubmitType::class,
                 [
