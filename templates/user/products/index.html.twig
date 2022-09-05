@@ -19,6 +19,9 @@
             </a>
         </div>
         <div class="user-products__list">
+            {{ render(controller('App\\Controller\\ProductsListController:index',
+                {'products': products, 'isUserExperience': isUserExperience}
+            )) }}
         </div>
     </div>
 {% endblock %}

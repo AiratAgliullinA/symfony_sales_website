@@ -24,17 +24,25 @@ class UserProductsController extends AbstractController
      */
     public function index(): Response
     {
-        if (!$this->getUser()) {
+        $user = $this->getUser();
+        if (!$user) {
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('user/products/index.html.twig');
+        return $this->render('user/products/index.html.twig',
+            [
+                'products' => $user->getProducts()->toArray(),
+                'isUserExperience' => true
+            ]
+        );
     }
 
     /**
      * Add action
      *
      * @Route("/user/product/add", name="app_add_user_product")
+     * @param Request $request
+     * @param ProductRepository $productRepository
      *
      * @return Response
      */
@@ -61,5 +69,53 @@ class UserProductsController extends AbstractController
         return $this->renderForm('user/product/add.html.twig',
             ['form' => $form]
         );
+    }
+
+    /**
+     * Edit action
+     *
+     * @Route("/user/product/edit/{id}", name="app_edit_user_product")
+     * @param int $id
+     * @param Request $request
+     * @param ProductRepository $productRepository
+     *
+     * @return Response
+     */
+    public function edit(int $id, Request $request, ProductRepository $productRepository): Response
+    {
+        $product = $this->getProductUser($id, $this->getUser(), $productRepository);
+        if (!$product) {
+            return $this->redirectToRoute('app_add_user_product');
+        }
+
+        $form = $this->createForm(ProductFormType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid() && $data = $form->getData()) {
+            $productRepository->add($data);
+
+            $this->addFlash(
+                'success',
+                'Ad edited successfully'
+            );
+            return $this->redirectToRoute('app_user_products');
+        }
+
+        return $this->renderForm('user/product/edit.html.twig',
+            ['form' => $form]
+        );
+    }
+
+    /**
+     * Get product user
+     *
+     * @param int $id
+     * @param $user
+     * @param ProductRepository $productRepository
+     *
+     * @return Product|null
+     */
+    protected function getProductUser(int $id, $user, ProductRepository $productRepository): ?Product
+    {
+        return $productRepository->findOneBy(['id' => $id, 'user' => $user]);
     }
 }
