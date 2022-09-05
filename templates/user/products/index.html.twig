@@ -9,6 +9,14 @@
 {% block header %}
     {{ parent() }}
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('products_list') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products_list') }}
+{% endblock %}
 
 {% block body %}
     <div class="user-products">
