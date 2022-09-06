@@ -15,6 +15,13 @@
     &__name {
       font-size: $font-size-medium;
     }
+    &__user-buttons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      align-content: end;
+      gap: $gutter-default;
+    }
   }
 }
 

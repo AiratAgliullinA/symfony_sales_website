@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -117,5 +118,30 @@ class UserProductsController extends AbstractController
     protected function getProductUser(int $id, $user, ProductRepository $productRepository): ?Product
     {
         return $productRepository->findOneBy(['id' => $id, 'user' => $user]);
+    }
+
+    /**
+     * Delete action
+     *
+     * @Route("/user/product/delete", name="app_delete_user_product", methods="GET")
+     * @param Request $request
+     * @param ProductRepository $productRepository
+     *
+     * @return JsonResponse
+     */
+    public function delete(Request $request, ProductRepository $productRepository): JsonResponse
+    {
+        $productId = $request->query->get('id');
+        if ($product = $this->getProductUser($productId, $this->getUser(), $productRepository)) {
+            $productRepository->remove($product);
+            $this->addFlash(
+                'success',
+                'Ad deleted successfully'
+            );
+        }
+
+        return $this->json([
+            'reloadPage' => true
+        ]);
     }
 }
