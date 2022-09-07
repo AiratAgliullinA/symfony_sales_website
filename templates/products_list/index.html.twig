@@ -5,6 +5,11 @@
 <div class="products-list">
     {% for product in products %}
         <div class="product-item" data-id="{{ product.getId() }}">
+            {% if product.getImageFilename() %}
+                <img class="product-item__image" src="{{ asset('uploads/product_images/') ~ product.getImageFilename() }}" alt="Product image" />
+            {% else %}
+                <img class="product-item__image" src="{{ asset('uploads/product_images/placeholder.png') }}" alt="Placeholder" />
+            {% endif %}
             <div class="product-item__name">{{ product.getName() }}</div>
             <div class="product-item__shortDescr">{{ product.getShortDescription() }}</div>
             {% if isUserExperience %}
