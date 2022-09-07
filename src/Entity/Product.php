@@ -36,6 +36,11 @@ class Product
     private $user;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $imageFilename;
+
+    /**
      * Get object unique id
      *
      * @return integer
@@ -112,5 +117,28 @@ class Product
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * Set image file name
+     *
+     * @param string $imageFilename
+     *
+     * @return self
+     */
+    public function setImageFilename(string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
+        return $this;
+    }
+
+    /**
+     * Get image file name
+     *
+     * @return string
+     */
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Product;
 use App\Form\ProductFormType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\Product\ImageHandler;
 
 /**
  * User products controller
@@ -44,10 +45,11 @@ class UserProductsController extends AbstractController
      * @Route("/user/product/add", name="app_add_user_product")
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param ImageHandler $imageHandler
      *
      * @return Response
      */
-    public function add(Request $request, ProductRepository $productRepository): Response
+    public function add(Request $request, ProductRepository $productRepository, ImageHandler $imageHandler): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -79,10 +81,11 @@ class UserProductsController extends AbstractController
      * @param int $id
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param ImageHandler $imageHandler
      *
      * @return Response
      */
-    public function edit(int $id, Request $request, ProductRepository $productRepository): Response
+    public function edit(int $id, Request $request, ProductRepository $productRepository, ImageHandler $imageHandler): Response
     {
         $product = $this->getProductUser($id, $this->getUser(), $productRepository);
         if (!$product) {
