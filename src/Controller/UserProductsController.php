@@ -59,6 +59,9 @@ class UserProductsController extends AbstractController
         $form = $this->createForm(ProductFormType::class, new Product());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $data = $form->getData()) {
+            if ($image = $form->get('image')->getData()) {
+                $data->uploadImageProduct($image, $imageHandler);
+            }
             $user->addProduct($data);
             $productRepository->add($data);
 
@@ -95,6 +98,12 @@ class UserProductsController extends AbstractController
         $form = $this->createForm(ProductFormType::class, $product);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $data = $form->getData()) {
+            if ($form->get('isRemoveImage')->getData()) {
+                $data->deleteImageProduct($imageHandler);
+            }
+            if ($image = $form->get('image')->getData()) {
+                $data->uploadImageProduct($image, $imageHandler);
+            }
             $productRepository->add($data);
 
             $this->addFlash(
@@ -105,7 +114,10 @@ class UserProductsController extends AbstractController
         }
 
         return $this->renderForm('user/product/edit.html.twig',
-            ['form' => $form]
+            [
+                'form' => $form,
+                'product' => $product
+            ]
         );
     }
 
@@ -129,13 +141,15 @@ class UserProductsController extends AbstractController
      * @Route("/user/product/delete", name="app_delete_user_product", methods="GET")
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param ImageHandler $imageHandler
      *
      * @return JsonResponse
      */
-    public function delete(Request $request, ProductRepository $productRepository): JsonResponse
+    public function delete(Request $request, ProductRepository $productRepository, ImageHandler $imageHandler): JsonResponse
     {
         $productId = $request->query->get('id');
         if ($product = $this->getProductUser($productId, $this->getUser(), $productRepository)) {
+            $product->deleteImageProduct($imageHandler);
             $productRepository->remove($product);
             $this->addFlash(
                 'success',

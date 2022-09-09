@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\Product\ImageHandler;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,6 +41,11 @@ class Product
      * @ORM\Column(type="string", nullable=true)
      */
     private $imageFilename;
+
+    /**
+     * @param boolean
+     */
+    private $isRemoveImage;
 
     /**
      * Get object unique id
@@ -140,5 +147,57 @@ class Product
     public function getImageFilename(): ?string
     {
         return $this->imageFilename;
+    }
+
+    /**
+     * Delete image product
+     *
+     * @param ImageHandler $imageHandler
+     *
+     * @return void
+     */
+    public function deleteImageProduct(ImageHandler $imageHandler)
+    {
+        if ($imageFilename = $this->getImageFilename()) {
+            $this->setImageFilename('');
+            $imageHandler->remove($imageFilename);
+        }
+    }
+
+    /**
+     * Upload image product
+     *
+     * @param UploadedFile $imageFile
+     * @param ImageHandler $imageHandler
+     *
+     * @return void
+     */
+    public function uploadImageProduct(UploadedFile $imageFile, ImageHandler $imageHandler)
+    {
+        $imageFilename = $imageHandler->upload($imageFile);
+        $this->setImageFilename($imageFilename);
+    }
+
+    /**
+     * Set isRemoveImage
+     *
+     * @param boolean $isRemoveImage
+     *
+     * @return self
+     */
+    public function setIsRemoveImage($isRemoveImage): self
+    {
+        $this->isRemoveImage = $isRemoveImage;
+        return $this;
+    }
+
+    /**
+     * Get isRemoveImage
+     *
+     * @return boolean
+     */
+    public function getIsRemoveImage(): ?bool
+    {
+        return $this->isRemoveImage;
     }
 }
