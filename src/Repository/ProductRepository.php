@@ -57,4 +57,20 @@ class ProductRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    /**
+     * Find by substring
+     *
+     * @param string substring
+     *
+     * @return array
+     */
+    public function findBySubstring(string $substring): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.name LIKE :substring')
+            ->setParameter('substring', '%' . $substring . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
