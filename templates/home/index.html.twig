@@ -9,6 +9,22 @@
 {% block header %}
     {{ parent() }}
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('products_list') }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products_list') }}
+{% endblock %}
 
 {% block body %}
+    <div class="home">
+        <h1 class="home__title">Ads list</h1>
+        <div class="home__products-list">
+            {{ render(controller('App\\Controller\\ProductsListController:index',
+                {'products': products, 'page': page, 'isUserExperience': isUserExperience}
+            )) }}
+        </div>
+    </div>
 {% endblock %}

@@ -20,11 +20,12 @@ class UserProductsController extends AbstractController
     /**
      * Index
      *
-     * @Route("/user/products", name="app_user_products")
+     * @Route("/user/products/{page<\d+>}", name="app_user_products")
+     * @param int $page
      *
      * @return Response
      */
-    public function index(): Response
+    public function index(int $page = 1): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -34,6 +35,7 @@ class UserProductsController extends AbstractController
         return $this->render('user/products/index.html.twig',
             [
                 'products' => $user->getProducts()->toArray(),
+                'page' => $page,
                 'isUserExperience' => true
             ]
         );

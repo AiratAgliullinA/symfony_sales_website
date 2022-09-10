@@ -5,16 +5,18 @@ body {
   background: $main-color-gray;
   margin: 0;
   font-size: $font-size-default;
-}
-
-a {
-  color: $main-color-dark;
-  text-decoration: unset;
-  &:hover {
+  a {
     color: $main-color-dark;
-  }
-  &.inverse {
-    color: $main-color-gray;
+    text-decoration: unset;
+    &:hover {
+      color: $main-color-gray;
+    }
+    &.inverse {
+      color: $main-color-gray;
+      &:hover {
+        color: $main-color-dark;
+      }
+    }
   }
 }
 
@@ -39,6 +41,19 @@ a {
       display: grid;
       grid-auto-flow: column;
       gap: $gutter-default;
+    }
+  }
+}
+
+.pagination {
+  margin-top: $gutter-medium;
+  justify-content: center;
+  span {
+    padding: $gutter-small $gutter-default;
+    margin: $gutter-small;
+    &:not(.current) {
+      background: $main-color-green;
+      border-radius: $border-radius;
     }
   }
 }
