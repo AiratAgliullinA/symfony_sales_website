@@ -2,7 +2,7 @@
 # Search form
 #}
 
-<form class="search_form" method="get" action="{{ path(searchFormRouteName, searchFormParams) }}">
+<form class="search_form" method="get" action="{{ path(searchFormRouteName) }}">
     <input type="text" id="search_form_substring" placeholder="Search items" value="{{ searchFormSubstringValue }}" name="substring"  class="form-control" />
     <button class="btn btn-primary search">Search</button>
 </form>

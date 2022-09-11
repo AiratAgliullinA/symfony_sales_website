@@ -64,3 +64,25 @@ body {
     margin-left: $gutter-medium;
   }
 }
+
+.sort-box {
+  margin-top: $gutter-medium;
+  &__title {
+    font-size: $font-size-medium;
+    font-weight: bold;
+  }
+  &__items {
+    display: flex;
+    gap: $gutter-default;
+    flex-wrap: wrap;
+    a {
+      &:hover {
+        color: $main-color-dark;
+      }
+      &.asc,
+      &.desc {
+        text-decoration: underline;
+      }
+    }
+  }
+}

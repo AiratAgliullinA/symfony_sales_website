@@ -45,12 +45,15 @@ class HomeController extends AbstractController
                 )
             );
         }
+        $products = $this->getProducts($productRepository, $request, $paginator, $page);
 
         return $this->render('home/index.html.twig',
             [
-                'products' => $this->getProducts($productRepository, $request, $paginator, $page),
+                'products' => $products,
                 'page' => $page,
-                'isUserExperience' => false
+                'isUserExperience' => false,
+                'isSortBoxVisible' => count($products) > 0,
+                'sortItems' => $this->getSortItems($request)
             ]
         );
     }
@@ -82,5 +85,24 @@ class HomeController extends AbstractController
             $productsQuery,
             $page
         );
+    }
+
+    /**
+     * Return sort items for products
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function getSortItems(Request $request): array
+    {
+        $direction = $request->query->get('direction');
+
+        return [
+            [
+                'title' => 'Name' . ' ' . ($direction === 'desc' ? 'Z-A' : 'A-Z'),
+                'field' => 'p.name'
+            ]
+        ];
     }
 }

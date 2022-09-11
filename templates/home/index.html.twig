@@ -20,16 +20,30 @@
 
 {% block body %}
     <div class="home">
-        <h1 class="home__title">{{ products|length }} - item(s) in page</h1>
+        <h1 class="home__title">Ads List</h1>
         <div class="home__search">
             {{ include('forms/search.html.twig',
                 {
                     'searchFormRouteName': 'app_home',
-                    'searchFormParams': {'page' : 1},
                     'searchFormSubstringValue': app.request.query.get('substring')
                 }
             ) }}
         </div>
+
+        {% if isSortBoxVisible %}
+            <div class="home__sort-box sort-box">
+                <div class="sort-box__title">Sort by:</div>
+                <div class="sort-box__items">
+                    {% for sortItem in sortItems %}
+                        {{ knp_pagination_sortable(
+                            products,
+                            sortItem['title'],
+                            sortItem['field']
+                        ) }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
         <div class="home__products-list">
             {{ render(controller('App\\Controller\\ProductsListController:index',
                 {'products': products, 'isUserExperience': isUserExperience}
