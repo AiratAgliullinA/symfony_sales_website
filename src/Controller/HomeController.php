@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\RequestManager;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * Home controller
@@ -21,11 +23,18 @@ class HomeController extends AbstractController
      * @param ProductRepository $productRepository
      * @param Request $request
      * @param RequestManager $requestManager
+     * @param PaginatorInterface $paginator
      * @param int $page
      *
      * @return Response
      */
-    public function index(ProductRepository $productRepository, Request $request, RequestManager $requestManager, int $page = 1): Response
+    public function index(
+        ProductRepository $productRepository,
+        Request $request,
+        RequestManager $requestManager,
+        PaginatorInterface $paginator,
+        int $page = 1
+    ): Response
     {
         if (!$requestManager->isAllGetParametersValid($request)) {
             return $this->redirectToRoute(
@@ -39,7 +48,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig',
             [
-                'products' => $this->getProducts($productRepository, $request),
+                'products' => $this->getProducts($productRepository, $request, $paginator, $page),
                 'page' => $page,
                 'isUserExperience' => false
             ]
@@ -51,15 +60,27 @@ class HomeController extends AbstractController
      *
      * @param ProductRepository $productRepository
      * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @param int $page
      *
-     * @return array
+     * @return PaginationInterface
      */
-    protected function getProducts(ProductRepository $productRepository, Request $request): array
+    protected function getProducts(
+        ProductRepository $productRepository,
+        Request $request,
+        PaginatorInterface $paginator,
+        int $page
+    ): PaginationInterface
     {
         if ($substring = $request->query->get('substring')) {
-            return $productRepository->findBySubstring($substring);
+            $productsQuery = $productRepository->defineFindBySubstringQuery($substring);
+        } else {
+            $productsQuery = $productRepository->defineFindAllQuery();
         }
 
-        return $productRepository->findAll();
+        return $paginator->paginate(
+            $productsQuery,
+            $page
+        );
     }
 }

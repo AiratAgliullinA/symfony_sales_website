@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -59,18 +60,40 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find by substring
+     * Define find all items
+     *
+     * @return QueryBuilder
+     */
+    public function defineFindAllQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p');
+    }
+
+    /**
+     * Define find by substring
      *
      * @param string substring
      *
-     * @return array
+     * @return QueryBuilder
      */
-    public function findBySubstring(string $substring): array
+    public function defineFindBySubstringQuery(string $substring): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.name LIKE :substring')
-            ->setParameter('substring', '%' . $substring . '%')
-            ->getQuery()
-            ->getResult();
+            ->setParameter('substring', '%' . $substring . '%');
+    }
+
+    /**
+     * Define find by user id
+     *
+     * @param int $userId
+     *
+     * @return QueryBuilder
+     */
+    public function defineFindByUserIdQuery(int $userId): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $userId);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,11 +23,13 @@ class UserProductsController extends AbstractController
      * Index
      *
      * @Route("/user/products/{page<\d+>}", name="app_user_products")
+     * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
      * @param int $page
      *
      * @return Response
      */
-    public function index(int $page = 1): Response
+    public function index(ProductRepository $productRepository, PaginatorInterface $paginator, int $page = 1): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -34,10 +38,32 @@ class UserProductsController extends AbstractController
 
         return $this->render('user/products/index.html.twig',
             [
-                'products' => $user->getProducts()->toArray(),
-                'page' => $page,
+                'products' => $this->getProductsUser($productRepository, $paginator, $page, $user->getId()),
                 'isUserExperience' => true
             ]
+        );
+    }
+
+    /**
+     * Get products user
+     *
+     * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
+     * @param int $page
+     * @param int $userId
+     *
+     * @return PaginationInterface
+     */
+    protected function getProductsUser(
+        ProductRepository $productRepository,
+        PaginatorInterface $paginator,
+        int $page,
+        int $userId
+    ): PaginationInterface
+    {
+        return $paginator->paginate(
+            $productRepository->defineFindByUserIdQuery($userId),
+            $page
         );
     }
 

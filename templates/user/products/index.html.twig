@@ -28,8 +28,9 @@
         </div>
         <div class="user-products__list">
             {{ render(controller('App\\Controller\\ProductsListController:index',
-                {'products': products, 'page': page, 'isUserExperience': isUserExperience}
+                {'products': products, 'isUserExperience': isUserExperience}
             )) }}
         </div>
+        {{ knp_pagination_render(products) }}
     </div>
 {% endblock %}
