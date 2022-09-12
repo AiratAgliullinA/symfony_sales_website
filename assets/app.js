@@ -14,6 +14,11 @@ global.$ = global.jQuery = $;
 import './styles/app.scss';
 
 import 'bootstrap';
+import 'inputmask';
 
 // start the Stimulus application
 import './bootstrap';
+
+$(document).ready(function() {
+    Inputmask().mask($('.input-mask'));
+});

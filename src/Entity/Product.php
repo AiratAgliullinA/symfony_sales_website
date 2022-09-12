@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\Product\ImageHandler;
 use Doctrine\ORM\Mapping as ORM;
+use App\Intl\Currencies;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -46,6 +47,11 @@ class Product
      * @param boolean
      */
     private $isRemoveImage;
+
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=2)
+     */
+    private $price = 0.00;
 
     /**
      * Get object unique id
@@ -147,6 +153,41 @@ class Product
     public function getImageFilename(): ?string
     {
         return $this->imageFilename;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     *
+     * @return self
+     */
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    /**
+     * Get display price
+     *
+     * @return string
+     */
+    public function getDisplayPrice(): string
+    {
+        $price = $this->getPrice();
+
+        return Currencies::getSymbol(Currencies::MAIN_CURRENCY_ISO) . $price;
     }
 
     /**

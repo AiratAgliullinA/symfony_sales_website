@@ -12,6 +12,7 @@
             {% endif %}
             <div class="product-item__name">{{ product.getName() }}</div>
             <div class="product-item__shortDescr">{{ product.getShortDescription() }}</div>
+            <div class="product-item__price">{{ product.getDisplayPrice() }}</div>
             {% if isUserExperience %}
                 <div class="product-item__user-buttons">
                     <a class="btn btn-primary product-item__edit-button" href="{{ path('app_edit_user_product', {id: product.getId()}) }}">Edit</a>

@@ -25,6 +25,7 @@
             {{ form_start(form) }}
                 {{ form_row(form.name) }}
                 {{ form_row(form.shortDescription) }}
+                {{ form_row(form.price) }}
                 {% if product.getImageFilename() %}
                     <div class="product-form__uploaded-image mb-3">
                         <img class="image" alt="Product image" src="{{ asset('uploads/product_images/') ~ product.getImageFilename() }}" />
