@@ -54,6 +54,11 @@ class Product
     private $price = 0.00;
 
     /**
+     * @ORM\Column(type="string", length=16)
+     */
+    private $phone;
+
+    /**
      * Get object unique id
      *
      * @return integer
@@ -240,5 +245,29 @@ class Product
     public function getIsRemoveImage(): ?bool
     {
         return $this->isRemoveImage;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return self
+     */
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 }

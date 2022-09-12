@@ -70,6 +70,15 @@ class ProductFormType extends AbstractType
                     ]
                 ]
             )
+            ->add('phone', TextType::class,
+                [
+                    'label' => 'Contact number',
+                    'attr' => [
+                        'class' => 'input-mask',
+                        'data-inputmask' => "'mask': '999-999-9999', 'clearIncomplete': true"
+                    ]
+                ]
+            )
             ->add('image', FileType::class,
                 [
                     'label' => 'Image',
