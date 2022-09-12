@@ -102,6 +102,10 @@ class HomeController extends AbstractController
             [
                 'title' => 'Name' . ' ' . ($direction === 'desc' ? 'Z-A' : 'A-Z'),
                 'field' => 'p.name'
+            ],
+            [
+                'title' => 'Price' . ' ' . ($direction === 'desc' ? 'High-Low' : 'Low-High'),
+                'field' => 'p.price'
             ]
         ];
     }
