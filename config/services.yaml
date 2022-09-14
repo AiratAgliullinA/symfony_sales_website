@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    product_images_directory: '%kernel.project_dir%/public/uploads/product_images'
+    products_images_directory: '%kernel.project_dir%/public/uploads/products_images'
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +23,6 @@ services:
 
     App\Service\Product\ImageHandler:
         arguments:
-            $targetDirectory: '%product_images_directory%'
+            $targetDirectory: '%products_images_directory%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

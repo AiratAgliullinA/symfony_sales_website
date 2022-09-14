@@ -6,7 +6,8 @@ use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\Product\ImageHandler;
 use Doctrine\ORM\Mapping as ORM;
-use App\Intl\Currencies;
+use Money\Money;
+use App\Converter\MoneyConverter;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -21,7 +22,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=128)
      */
     private $name;
 
@@ -49,9 +50,16 @@ class Product
     private $isRemoveImage;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Embedded(class="\Money\Money")
      */
-    private $price = 0.00;
+    private $price;
+
+    /**
+     * Fake price for forms
+     *
+     * @param int
+     */
+    private $fakePrice;
 
     /**
      * @ORM\Column(type="string", length=16)
@@ -132,7 +140,7 @@ class Product
      *
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -163,24 +171,49 @@ class Product
     /**
      * Set price
      *
-     * @param float $price
+     * @param int $price
      *
      * @return self
      */
-    public function setPrice(float $price): self
+    public function setPrice(int $price): self
     {
-        $this->price = $price;
+        $this->price = MoneyConverter::createMoneyObject($price);
         return $this;
     }
 
     /**
      * Get price
      *
-     * @return float
+     * @return Money
      */
-    public function getPrice(): ?float
+    public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set fake price
+     *
+     * @param int $fakePrice
+     *
+     * @return self
+     */
+    public function setFakePrice(int $fakePrice): self
+    {
+        $this->setPrice($fakePrice);
+        return $this;
+    }
+
+    /**
+     * Get fake price
+     *
+     * @return int
+     */
+    public function getFakePrice()
+    {
+        $price = $this->getPrice();
+
+        return $price ? $price->getAmount() : 0;
     }
 
     /**
@@ -192,7 +225,7 @@ class Product
     {
         $price = $this->getPrice();
 
-        return Currencies::getSymbol(Currencies::MAIN_CURRENCY_ISO) . $price;
+        return MoneyConverter::getFormattedMoney($price);
     }
 
     /**

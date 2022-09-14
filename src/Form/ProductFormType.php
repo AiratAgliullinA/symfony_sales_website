@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Product;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
-use App\Intl\Currencies;
+use App\Converter\MoneyConverter;
 
 /**
  * Product form
@@ -38,7 +38,7 @@ class ProductFormType extends AbstractType
                     'required' => true,
                     'constraints' => [
                         new Length([
-                            'max' => 255,
+                            'max' => 128,
                             'maxMessage' => 'Maximum length {{ limit }} characters'
                         ])
                     ]
@@ -56,18 +56,11 @@ class ProductFormType extends AbstractType
                     ]
                 ]
             )
-            ->add('price', MoneyType::class,
+            ->add('fakePrice', MoneyType::class,
                 [
-                    'currency' => Currencies::MAIN_CURRENCY_ISO,
-                    'attr' => [
-                        'class' => 'input-mask',
-                        'maxlength' => 14,
-                        'data-inputmask' =>
-                            "'alias': 'decimal',
-                            'rightAlign': false,
-                            'digits': " . 2 . ",
-                            'allowMinus': false"
-                    ]
+                    'label' => 'Price',
+                    'currency' => MoneyConverter::MAIN_CURRENCY_ISO,
+                    'divisor' => 100
                 ]
             )
             ->add('phone', TextType::class,
