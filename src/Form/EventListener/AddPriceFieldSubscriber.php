@@ -38,7 +38,16 @@ class AddPriceFieldSubscriber implements EventSubscriberInterface
             [
                 'label' => 'Price',
                 'currency' => $currency,
-                'divisor' => 100
+                'divisor' => 100,
+                'attr' => [
+                    'class' => 'input-mask',
+                    'maxlength' => 10,
+                    'data-inputmask' =>
+                        "'alias': 'decimal',
+                        'rightAlign': false,
+                        'digits': " . 2 . ",
+                        'allowMinus': false"
+                ]
             ]
         );
     }

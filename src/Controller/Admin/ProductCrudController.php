@@ -53,7 +53,18 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('fakePrice')
                 ->setLabel('Price')
                 ->setCurrencyPropertyPath('currency')
-                ->setTextAlign(TextAlign::LEFT),
+                ->setTextAlign(TextAlign::LEFT)
+                ->setFormTypeOptions([
+                    'attr' => [
+                        'class' => 'input-mask',
+                        'maxlength' => 10,
+                        'data-inputmask' =>
+                            "'alias': 'decimal',
+                            'rightAlign': false,
+                            'digits': " . 2 . ",
+                            'allowMinus': false"
+                    ]
+                ]),
             TextField::new('phone')
                 ->setLabel('Contact number')
                 ->setFormTypeOptions([
