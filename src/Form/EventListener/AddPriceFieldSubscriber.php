@@ -2,7 +2,6 @@
 
 namespace App\Form\EventListener;
 
-use App\Converter\MoneyConverter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormEvent;
@@ -38,7 +37,7 @@ class AddPriceFieldSubscriber implements EventSubscriberInterface
         $form->add('fakePrice', MoneyType::class,
             [
                 'label' => 'Price',
-                'currency' => $currency ?: MoneyConverter::MAIN_CURRENCY_ISO,
+                'currency' => $currency,
                 'divisor' => 100
             ]
         );

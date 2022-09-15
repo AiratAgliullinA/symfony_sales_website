@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
-use App\Converter\MoneyConverter;
 
 /**
  * Product crud
@@ -53,7 +52,7 @@ class ProductCrudController extends AbstractCrudController
                 ]),
             MoneyField::new('fakePrice')
                 ->setLabel('Price')
-                ->setCurrency(MoneyConverter::MAIN_CURRENCY_ISO)
+                ->setCurrencyPropertyPath('currency')
                 ->setTextAlign(TextAlign::LEFT),
             TextField::new('phone')
                 ->setLabel('Contact number')

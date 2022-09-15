@@ -195,13 +195,13 @@ class Product
     /**
      * Get currency
      *
-     * @return string|null
+     * @return string
      */
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
         $price = $this->getPrice();
 
-        return $price ? $price->getCurrency() : null;
+        return $price ? $price->getCurrency() : MoneyConverter::MAIN_CURRENCY_ISO;
     }
 
     /**
@@ -213,8 +213,7 @@ class Product
      */
     public function setFakePrice(int $fakePrice): self
     {
-        $currency = $this->getCurrency() ?: MoneyConverter::MAIN_CURRENCY_ISO;
-        $this->setPrice($fakePrice, $currency);
+        $this->setPrice($fakePrice, $this->getCurrency());
 
         return $this;
     }
