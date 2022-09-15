@@ -6,10 +6,12 @@ use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Option\TextAlign;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
  * Product crud
@@ -72,7 +74,15 @@ class ProductCrudController extends AbstractCrudController
                         'class' => 'input-mask',
                         'data-inputmask' => "'mask': '999-999-9999', 'clearIncomplete': true"
                     ]
-                ])
+                ]),
+            TextareaField::new('imageFile')
+                ->setLabel('Image')
+                ->setFormType(VichImageType::class)
+                ->hideOnIndex(),
+            ImageField::new('imageFilename')
+                ->setLabel('Image')
+                ->setBasePath('/uploads/products_images')
+                ->onlyOnIndex()
         ];
     }
 

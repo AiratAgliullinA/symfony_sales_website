@@ -8,9 +8,11 @@ use App\Service\Product\ImageHandler;
 use Doctrine\ORM\Mapping as ORM;
 use Money\Money;
 use App\Converter\MoneyConverter;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @Vich\Uploadable()
  */
 class Product
 {
@@ -43,6 +45,11 @@ class Product
      * @ORM\Column(type="string", nullable=true)
      */
     private $imageFilename;
+
+    /**
+     * @Vich\UploadableField(mapping="products_images", fileNameProperty="imageFilename")
+     */
+    private $imageFile;
 
     /**
      * @param boolean
@@ -148,11 +155,11 @@ class Product
     /**
      * Set image file name
      *
-     * @param string $imageFilename
+     * @param string|null $imageFilename
      *
      * @return self
      */
-    public function setImageFilename(string $imageFilename): self
+    public function setImageFilename(?string $imageFilename): self
     {
         $this->imageFilename = $imageFilename;
         return $this;
@@ -252,7 +259,7 @@ class Product
     public function deleteImageProduct(ImageHandler $imageHandler)
     {
         if ($imageFilename = $this->getImageFilename()) {
-            $this->setImageFilename('');
+            $this->setImageFilename(null);
             $imageHandler->remove($imageFilename);
         }
     }
@@ -314,6 +321,30 @@ class Product
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Return image file
+     *
+     * @return mixed
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set image file
+     *
+     * @param mixed $imageFile
+     *
+     * @return self
+     */
+    public function setImageFile($imageFile): self
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }
