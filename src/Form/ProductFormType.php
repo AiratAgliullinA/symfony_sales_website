@@ -5,7 +5,6 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -14,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Product;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
-use App\Converter\MoneyConverter;
+use App\Form\EventListener\AddPriceFieldSubscriber;
 
 /**
  * Product form
@@ -56,13 +55,7 @@ class ProductFormType extends AbstractType
                     ]
                 ]
             )
-            ->add('fakePrice', MoneyType::class,
-                [
-                    'label' => 'Price',
-                    'currency' => MoneyConverter::MAIN_CURRENCY_ISO,
-                    'divisor' => 100
-                ]
-            )
+            ->addEventSubscriber(new AddPriceFieldSubscriber())
             ->add('phone', TextType::class,
                 [
                     'label' => 'Contact number',

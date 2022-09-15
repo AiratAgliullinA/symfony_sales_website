@@ -24,7 +24,7 @@ class MoneyConverter
      *
      * @return Money
      */
-    public static function createMoneyObject(int $num, string $currency = self::MAIN_CURRENCY_ISO): Money
+    public static function createMoneyObject(int $num, string $currency): Money
     {
         return new Money($num, new Currency($currency));
     }

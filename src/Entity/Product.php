@@ -172,12 +172,13 @@ class Product
      * Set price
      *
      * @param int $price
+     * @param string $currency
      *
      * @return self
      */
-    public function setPrice(int $price): self
+    public function setPrice(int $price, string $currency): self
     {
-        $this->price = MoneyConverter::createMoneyObject($price);
+        $this->price = MoneyConverter::createMoneyObject($price, $currency);
         return $this;
     }
 
@@ -192,6 +193,18 @@ class Product
     }
 
     /**
+     * Get currency
+     *
+     * @return string|null
+     */
+    public function getCurrency(): ?string
+    {
+        $price = $this->getPrice();
+
+        return $price ? $price->getCurrency() : null;
+    }
+
+    /**
      * Set fake price
      *
      * @param int $fakePrice
@@ -200,7 +213,9 @@ class Product
      */
     public function setFakePrice(int $fakePrice): self
     {
-        $this->setPrice($fakePrice);
+        $currency = $this->getCurrency() ?: MoneyConverter::MAIN_CURRENCY_ISO;
+        $this->setPrice($fakePrice, $currency);
+
         return $this;
     }
 

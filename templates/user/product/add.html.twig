@@ -14,7 +14,13 @@
     <div class="add-product">
         <h1 class="add-product__title">Add advertisement</h1>
         <div class="product-form">
-            {{ form(form) }}
+            {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.shortDescription) }}
+                {{ form_row(form.fakePrice) }}
+                {{ form_row(form.phone) }}
+                {{ form_row(form.image) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}
