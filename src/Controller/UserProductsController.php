@@ -61,8 +61,10 @@ class UserProductsController extends AbstractController
         int $userId
     ): PaginationInterface
     {
+        $productsQuery = $productRepository->addUserIdCondition($productRepository->defineFindAllQuery(), $userId);
+
         return $paginator->paginate(
-            $productRepository->defineFindByUserIdQuery($userId),
+            $productsQuery,
             $page
         );
     }

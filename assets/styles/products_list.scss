@@ -27,6 +27,17 @@
       align-content: end;
       gap: $gutter-default;
     }
+    &__status {
+      &_0 {
+        color: $main-color-product-status-pending;
+      }
+      &_1 {
+        color: $main-color-product-status-approved;
+      }
+      &_2 {
+        color: $main-color-product-status-cancelled;
+      }
+    }
   }
 }
 

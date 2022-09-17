@@ -6,6 +6,7 @@ use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -39,6 +40,8 @@ class ProductCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('user'),
+            ChoiceField::new('status')
+                ->setChoices(array_flip(Product::getAllStatuses())),
             TextField::new('name')
                 ->setFormTypeOptions([
                     'attr' => [

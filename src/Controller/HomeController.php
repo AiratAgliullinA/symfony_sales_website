@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\RequestManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use App\Entity\Product;
 
 /**
  * Home controller
@@ -75,10 +76,10 @@ class HomeController extends AbstractController
         int $page
     ): PaginationInterface
     {
+        $productsQuery = $productRepository
+            ->addStatusCondition($productRepository->defineFindAllQuery(), Product::STATUS_APPROVED);
         if ($substring = $request->query->get('substring')) {
-            $productsQuery = $productRepository->defineFindBySubstringQuery($substring);
-        } else {
-            $productsQuery = $productRepository->defineFindAllQuery();
+            $productsQuery = $productRepository->addSubstringCondition($productsQuery, $substring);
         }
 
         return $paginator->paginate(

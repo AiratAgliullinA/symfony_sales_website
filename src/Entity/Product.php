@@ -16,6 +16,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Product
 {
+    const STATUS_PENDING = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_CANCELLED = 2;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -72,6 +76,11 @@ class Product
      * @ORM\Column(type="string", length=16)
      */
     private $phone;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status = self::STATUS_PENDING;
 
     /**
      * Get object unique id
@@ -345,6 +354,56 @@ class Product
     public function setImageFile($imageFile): self
     {
         $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    /**
+     * Return list all statuses for product
+     *
+     * @return array
+     */
+    public static function getAllStatuses(): array
+    {
+        return [
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_APPROVED => 'Approved',
+            self::STATUS_CANCELLED => 'Cancelled'
+        ];
+    }
+
+    /**
+     * Return status text
+     *
+     * @return string
+     */
+    public function getStatusText(): string
+    {
+        $allStatuses = self::getAllStatuses();
+
+        return $allStatuses[$this->getStatus()];
+    }
+
+    /**
+     * Return status
+     *
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status
+     *
+     * @param int $status
+     *
+     * @return self
+     */
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

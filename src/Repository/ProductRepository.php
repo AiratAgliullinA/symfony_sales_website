@@ -70,30 +70,56 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * Define find by substring
+     * Add substring condition
      *
-     * @param string substring
+     * @param QueryBuilder $queryBuilder
+     * @param string $substring
+     * @param string $alias
      *
      * @return QueryBuilder
      */
-    public function defineFindBySubstringQuery(string $substring): QueryBuilder
+    public function addSubstringCondition(QueryBuilder $queryBuilder, string $substring, string $alias = '')
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.name LIKE :substring')
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+
+        return $queryBuilder
+            ->andWhere($alias . '.name LIKE :substring')
             ->setParameter('substring', '%' . $substring . '%');
     }
 
     /**
-     * Define find by user id
+     * Add userid condition
      *
+     * @param QueryBuilder $queryBuilder
      * @param int $userId
+     * @param string $alias
      *
      * @return QueryBuilder
      */
-    public function defineFindByUserIdQuery(int $userId): QueryBuilder
+    public function addUserIdCondition(QueryBuilder $queryBuilder, int $userId, string $alias = '')
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.user = :user')
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+
+        return $queryBuilder
+            ->andWhere($alias . '.user = :user')
             ->setParameter('user', $userId);
+    }
+
+    /**
+     * Add status condition
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param int $status
+     * @param string $alias
+     *
+     * @return QueryBuilder
+     */
+    public function addStatusCondition(QueryBuilder $queryBuilder, int $status, string $alias = '')
+    {
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+
+        return $queryBuilder
+            ->andWhere($alias . '.status = :status')
+            ->setParameter('status', $status);
     }
 }
