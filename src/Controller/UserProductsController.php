@@ -134,6 +134,7 @@ class UserProductsController extends AbstractController
             if ($image = $form->get('image')->getData()) {
                 $data->uploadImageProduct($image, $imageHandler);
             }
+            $data->setStatus(Product::STATUS_PENDING);
             $productRepository->add($data);
 
             $this->addFlash(
