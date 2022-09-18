@@ -1,7 +1,5 @@
 # Site for posting advertisements
 
----
-
 ## Install
 1. composer install
 2. npm install
