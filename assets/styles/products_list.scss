@@ -1,0 +1,54 @@
+@import '~bootstrap/scss/bootstrap';
+@import 'variables.scss';
+
+.products-list {
+  margin-top: $gutter-medium;
+  display: grid;
+  gap: $gutter-medium;
+  .product-item {
+    border: $border-width solid $main-color-dark-gray;
+    border-radius: $border-radius;
+    padding: $gutter-default;
+    text-align: center;
+    display: grid;
+    gap: $gutter-default;
+    &__image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    &__name {
+      font-size: $font-size-medium;
+    }
+    &__buttons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      align-content: end;
+      gap: $gutter-default;
+    }
+    &__status {
+      &_0 {
+        color: $main-color-product-status-pending;
+      }
+      &_1 {
+        color: $main-color-product-status-approved;
+      }
+      &_2 {
+        color: $main-color-product-status-cancelled;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .products-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .products-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,29 @@
+{#
+# Products list
+#}
+
+<div class="products-list">
+    {% for product in products %}
+        <div class="product-item" data-id="{{ product.getId() }}">
+            {% if product.getImageFilename() %}
+                <img class="product-item__image" src="{{ asset('uploads/products_images/') ~ product.getImageFilename() }}" alt="Product image" />
+            {% else %}
+                <img class="product-item__image" src="{{ asset('uploads/products_images/placeholder.png') }}" alt="Placeholder" />
+            {% endif %}
+            <div class="product-item__name">{{ product.getName() }}</div>
+            <div class="product-item__shortDescr">{{ product.getShortDescription() }}</div>
+            <div class="product-item__price">{{ product.getDisplayPrice() }}</div>
+            {% if isUserExperience %}
+                <div class="product-item__status product-item__status_{{ product.getStatus() }}">{{ product.getStatusText() }}</div>
+            {% endif %}
+            <div class="product-item__buttons">
+                {% if isUserExperience %}
+                    <a class="btn btn-primary product-item__edit-button" href="{{ path('app_edit_user_product', {id: product.getId()}) }}">Edit</a>
+                    <button class="btn btn-danger product-item__delete-button">Delete</button>
+                {% else %}
+                    <a href="tel:{{ product.getPhone() }}" class="btn btn-primary product-item__call-button">Call</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

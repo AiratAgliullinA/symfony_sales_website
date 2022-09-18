@@ -1,0 +1,28 @@
+{#
+# Header widget
+#}
+
+<div class="header">
+    <div class="header__site-name"><a href="{{ path('app_home') }}" class="inverse">ADVERTISEMENTS</a></div>
+    <div class="header__user">
+        {% if user %}
+            <div class="header__user_authorized dropdown">
+                <a class="dropdown-toggle btn btn-primary" href="#" data-bs-toggle="dropdown">Profile</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item" href="{{ path('app_admin') }}">Dashboard</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ path('app_user_products') }}">My Ads</a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="header__user_unauthorized">
+                <a class="inverse" href="{{ path('app_login') }}">Login</a>
+                <a class="inverse" href="{{ path('app_register') }}">Registration</a>
+            </div>
+        {% endif %}
+    </div>
+</div>

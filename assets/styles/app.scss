@@ -1,0 +1,88 @@
+@import '~bootstrap/scss/bootstrap';
+@import 'variables.scss';
+
+body {
+  background: $main-color-gray;
+  margin: 0;
+  font-size: $font-size-default;
+  a {
+    color: $main-color-dark;
+    text-decoration: unset;
+    &:hover {
+      color: $main-color-gray;
+    }
+    &.inverse {
+      color: $main-color-gray;
+      &:hover {
+        color: $main-color-dark;
+      }
+    }
+  }
+}
+
+.container {
+  margin-top: $gutter-medium;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $gutter-default;
+  justify-content: space-around;
+  background: $main-color-green;
+  padding: $gutter-medium $gutter-big;
+  min-height: 100px;
+  &__site-name {
+    font-size: $font-size-medium;
+  }
+  &__user {
+    &_unauthorized {
+      display: grid;
+      grid-auto-flow: column;
+      gap: $gutter-default;
+    }
+  }
+}
+
+.pagination {
+  margin-top: $gutter-medium;
+  justify-content: center;
+  span {
+    padding: $gutter-small $gutter-default;
+    margin: $gutter-small;
+    &:not(.current) {
+      background: $main-color-green;
+      border-radius: $border-radius;
+    }
+  }
+}
+
+.search_form {
+  display: flex;
+  button.search {
+    margin-left: $gutter-medium;
+  }
+}
+
+.sort-box {
+  margin-top: $gutter-medium;
+  &__title {
+    font-size: $font-size-medium;
+    font-weight: bold;
+  }
+  &__items {
+    display: flex;
+    gap: $gutter-default;
+    flex-wrap: wrap;
+    a {
+      &:hover {
+        color: $main-color-dark;
+      }
+      &.asc,
+      &.desc {
+        text-decoration: underline;
+      }
+    }
+  }
+}
