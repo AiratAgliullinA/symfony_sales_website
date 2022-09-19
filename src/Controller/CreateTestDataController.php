@@ -40,7 +40,7 @@ class CreateTestDataController extends AbstractController
                     )
                 )
                 ->setRoles(['ROLE_ADMIN']);
-            $userRepository->add($user, true);
+            $userRepository->add($user);
         }
         $this->addFlash(
             'success',

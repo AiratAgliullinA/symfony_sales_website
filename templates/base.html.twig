@@ -16,7 +16,7 @@
     </head>
     <body>
         {% block header %}
-            {{ render(controller('App\\Controller\\HeaderController:index')) }}
+            {{ include('header/index.html.twig') }}
         {% endblock %}
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">

@@ -21,6 +21,8 @@ class ProductRepository extends ServiceEntityRepository
      * Constructor
      *
      * @param ManagerRegistry $registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -28,7 +30,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * Add
+     * Add entity
      *
      * @param Product $entity
      * @param bool $flush
@@ -37,14 +39,16 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function add(Product $entity, bool $flush = true): void
     {
-        $this->_em->persist($entity);
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($entity);
+
         if ($flush) {
-            $this->_em->flush();
+            $entityManager->flush();
         }
     }
 
     /**
-     * Remove
+     * Remove entity
      *
      * @param Product $entity
      * @param bool $flush
@@ -53,9 +57,11 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function remove(Product $entity, bool $flush = true): void
     {
-        $this->_em->remove($entity);
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($entity);
+
         if ($flush) {
-            $this->_em->flush();
+            $entityManager->flush();
         }
     }
 

@@ -5,7 +5,7 @@
 <div class="header">
     <div class="header__site-name"><a href="{{ path('app_home') }}" class="inverse">ADVERTISEMENTS</a></div>
     <div class="header__user">
-        {% if user %}
+        {% if app.user %}
             <div class="header__user_authorized dropdown">
                 <a class="dropdown-toggle btn btn-primary" href="#" data-bs-toggle="dropdown">Profile</a>
                 <ul class="dropdown-menu">
