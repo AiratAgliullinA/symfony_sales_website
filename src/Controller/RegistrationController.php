@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\LoginAuthenticator;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
      * @param UserPasswordHasherInterface $userPasswordHasher
      * @param UserAuthenticatorInterface $userAuthenticator
      * @param LoginAuthenticator $authenticator
-     * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
      * @Route("/register", name="app_register")
      *
      * @return Response
@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UserAuthenticatorInterface $userAuthenticator,
         LoginAuthenticator $authenticator,
-        EntityManagerInterface $entityManager
+        UserRepository $userRepository
     ): Response
     {
         $user = new User();
@@ -45,13 +45,12 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userRepository->add($user);
 
             return $userAuthenticator->authenticateUser(
                 $user,
