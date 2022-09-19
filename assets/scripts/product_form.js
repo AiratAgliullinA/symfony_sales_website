@@ -2,8 +2,6 @@
  * Product form script
  */
 
-import './styles/product_form.scss';
-
 $(document).ready(function() {
     $('.product-form__uploaded-image .remove').click(function () {
         const productForm = $(this).closest('.product-form');

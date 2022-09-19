@@ -15,6 +15,8 @@ import './styles/app.scss';
 
 import 'bootstrap';
 import Inputmask from 'inputmask';
+import './scripts/product_form';
+import './scripts/products_list';
 
 // start the Stimulus application
 import './bootstrap';
