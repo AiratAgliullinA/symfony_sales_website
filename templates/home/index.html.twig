@@ -22,7 +22,7 @@
             ) }}
         </div>
 
-        {% if isSortBoxVisible %}
+        {% if products|length > 0 %}
             <div class="home__sort-box sort-box">
                 <div class="sort-box__title">Sort by:</div>
                 <div class="sort-box__items">
@@ -35,12 +35,14 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="home__products-list">
+                {{ render(controller('App\\Controller\\ProductsListController:index',
+                    {'products': products, 'isUserExperience': isUserExperience}
+                )) }}
+            </div>
+            {{ knp_pagination_render(products) }}
+        {% else %}
+            <div class="home__items-not-found items-not-found">Items not found</div>
         {% endif %}
-        <div class="home__products-list">
-            {{ render(controller('App\\Controller\\ProductsListController:index',
-                {'products': products, 'isUserExperience': isUserExperience}
-            )) }}
-        </div>
-        {{ knp_pagination_render(products) }}
     </div>
 {% endblock %}

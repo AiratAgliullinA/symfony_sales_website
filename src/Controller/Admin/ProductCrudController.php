@@ -39,7 +39,8 @@ class ProductCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('user'),
+            AssociationField::new('user')
+                ->setSortable(false),
             ChoiceField::new('status')
                 ->setChoices(array_flip(Product::getAllStatuses())),
             TextField::new('name')
@@ -59,6 +60,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setLabel('Price')
                 ->setCurrencyPropertyPath('currency')
                 ->setTextAlign(TextAlign::LEFT)
+                ->setSortable(false)
                 ->setFormTypeOptions([
                     'attr' => [
                         'class' => 'input-mask',
@@ -72,6 +74,7 @@ class ProductCrudController extends AbstractCrudController
                 ]),
             TextField::new('phone')
                 ->setLabel('Contact number')
+                ->setSortable(false)
                 ->setFormTypeOptions([
                     'attr' => [
                         'class' => 'input-mask',
@@ -86,6 +89,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setLabel('Image')
                 ->setBasePath('/uploads/products_images')
                 ->onlyOnIndex()
+                ->setSortable(false)
         ];
     }
 

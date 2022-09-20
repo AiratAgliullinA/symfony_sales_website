@@ -58,6 +58,12 @@ body {
   }
 }
 
+.items-not-found {
+  font-size: $font-size-medium;
+  font-weight: 400;
+  margin-top: $gutter-medium;
+}
+
 .search_form {
   display: flex;
   button.search {
