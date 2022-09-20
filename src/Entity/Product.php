@@ -83,6 +83,14 @@ class Product
     private $status = self::STATUS_PENDING;
 
     /**
+     * Category
+     *
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $category;
+
+    /**
      * Get object unique id
      *
      * @return integer
@@ -406,5 +414,28 @@ class Product
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Category|null $category
+     *
+     * @return self
+     */
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
     }
 }

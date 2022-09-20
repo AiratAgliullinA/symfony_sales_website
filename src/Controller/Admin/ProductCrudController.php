@@ -41,6 +41,8 @@ class ProductCrudController extends AbstractCrudController
         return [
             AssociationField::new('user')
                 ->setSortable(false),
+            AssociationField::new('category')
+                ->setSortable(false),
             ChoiceField::new('status')
                 ->setChoices(array_flip(Product::getAllStatuses())),
             TextField::new('name')

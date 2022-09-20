@@ -128,4 +128,22 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere($alias . '.status = :status')
             ->setParameter('status', $status);
     }
+
+    /**
+     * Add categoryId condition
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param int $categoryId
+     * @param string $alias
+     *
+     * @return QueryBuilder
+     */
+    public function addCategoryIdCondition(QueryBuilder $queryBuilder, int $categoryId, string $alias = '')
+    {
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+
+        return $queryBuilder
+            ->andWhere($alias . '.category = :category')
+            ->setParameter('category', $categoryId);
+    }
 }
