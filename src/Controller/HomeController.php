@@ -53,7 +53,6 @@ class HomeController extends AbstractController
                 'products' => $products,
                 'page' => $page,
                 'isUserExperience' => false,
-                'isSortBoxVisible' => count($products) > 0,
                 'sortItems' => $this->getSortItems($request)
             ]
         );
@@ -106,7 +105,7 @@ class HomeController extends AbstractController
             ],
             [
                 'title' => 'Price' . ' ' . ($direction === 'desc' ? 'High-Low' : 'Low-High'),
-                'field' => 'p.price'
+                'field' => 'p.price.amount'
             ]
         ];
     }
