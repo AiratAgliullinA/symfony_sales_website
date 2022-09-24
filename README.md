@@ -5,6 +5,8 @@ All ads page:
 ![all_ads_page](demo_images/all_ads_page.png)
 User ads page:
 ![user_ads_page](demo_images/user_ads_page.png)
+Ad details page:
+![ad_details_page](demo_images/ad_details_page.png)
 All ads page (admin):
 ![all_ads_admin_page](demo_images/all_ads_admin_page.png)
 ## Additional extensions:
