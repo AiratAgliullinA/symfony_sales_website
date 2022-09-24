@@ -12,7 +12,8 @@ All ads page (admin):
 2. SCSS
 3. Bootstrap
 4. Inputmask
-5. Symfony Bundles - WebpackEncore, EasyAdmin, KnpPaginator and etc
+5. Select2
+6. Symfony Bundles - WebpackEncore, EasyAdmin, KnpPaginator and etc
 ## Install
 1. composer install
 2. npm install
