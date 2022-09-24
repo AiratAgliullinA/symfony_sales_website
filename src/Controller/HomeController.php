@@ -40,6 +40,11 @@ class HomeController extends AbstractController
         int $page = 1
     ): Response
     {
+        $categoryId = $request->query->get('categoryId');
+        if ($categoryId && !$categoryRepository->isValidCategory((int)$categoryId)) {
+            $request = $requestManager->unsetGetParameter($request, 'categoryId');
+        }
+
         if (!$requestManager->isAllGetParametersValid($request)) {
             return $this->redirectToRoute(
                 'app_home',
@@ -49,11 +54,10 @@ class HomeController extends AbstractController
                 )
             );
         }
-        $products = $this->getProducts($productRepository, $request, $paginator, $page);
 
         return $this->render('home/index.html.twig',
             [
-                'products' => $products,
+                'products' => $this->getProducts($productRepository, $request, $paginator, $page),
                 'categories' => $categoryRepository->findAll(),
                 'page' => $page,
                 'isUserExperience' => false,

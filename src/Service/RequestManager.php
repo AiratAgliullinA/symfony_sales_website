@@ -52,4 +52,21 @@ class RequestManager
             return trim($value) !== '';
         });
     }
+
+    /**
+     * Unset GET parameter by key
+     *
+     * @param Request $request
+     * @param string $key
+     *
+     * @return Request
+     */
+    public function unsetGetParameter(Request $request, string $key): Request
+    {
+        if ($request->query->get($key)) {
+            $request->query->set($key, '');
+        }
+
+        return $request;
+    }
 }

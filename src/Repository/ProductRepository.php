@@ -89,7 +89,7 @@ class ProductRepository extends ServiceEntityRepository
         $alias = $alias ?: $queryBuilder->getRootAlias();
 
         return $queryBuilder
-            ->andWhere($alias . '.name LIKE :substring')
+            ->andWhere($alias . '.name LIKE :substring OR ' . $alias . '.shortDescription LIKE :substring')
             ->setParameter('substring', '%' . $substring . '%');
     }
 

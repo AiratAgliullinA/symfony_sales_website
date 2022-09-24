@@ -63,4 +63,16 @@ class CategoryRepository extends ServiceEntityRepository
             $entityManager->flush();
         }
     }
+
+    /**
+     * Is valid category
+     *
+     * @param integer $categoryId
+     *
+     * @return boolean
+     */
+    public function isValidCategory(int $categoryId): bool
+    {
+        return (bool)$this->find($categoryId);
+    }
 }
