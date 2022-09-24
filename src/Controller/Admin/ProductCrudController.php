@@ -72,7 +72,8 @@ class ProductCrudController extends AbstractCrudController
                             'rightAlign': false,
                             'digits': " . 2 . ",
                             'allowMinus': false"
-                    ]
+                    ],
+                    'required' => true
                 ]),
             TextField::new('phone')
                 ->setLabel('Contact number')

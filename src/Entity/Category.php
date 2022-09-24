@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -20,6 +21,8 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=128)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -63,11 +66,11 @@ class Category
     /**
      * Set name
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
         return $this;
@@ -78,7 +81,7 @@ class Category
      *
      * @return string
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }

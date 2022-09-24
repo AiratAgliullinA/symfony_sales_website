@@ -61,6 +61,7 @@ class ProductFormType extends AbstractType
             ->add('phone', TextType::class,
                 [
                     'label' => 'Contact number',
+                    'required' => true,
                     'attr' => [
                         'class' => 'input-mask',
                         'data-inputmask' => "'mask': '999-999-9999', 'clearIncomplete': true"
@@ -85,7 +86,9 @@ class ProductFormType extends AbstractType
                     ]
                 ]
             )
-            ->add('isRemoveImage', HiddenType::class)
+            ->add('isRemoveImage', HiddenType::class, [
+                'empty_data' => false
+            ])
             ->add('category', EntityType::class,
                 [
                     'label' => 'Category',

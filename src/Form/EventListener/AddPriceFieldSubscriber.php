@@ -38,6 +38,7 @@ class AddPriceFieldSubscriber implements EventSubscriberInterface
             [
                 'label' => 'Price',
                 'currency' => $currency,
+                'required' => true,
                 'divisor' => 100,
                 'attr' => [
                     'class' => 'input-mask',
