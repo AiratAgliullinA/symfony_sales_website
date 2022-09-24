@@ -8,6 +8,7 @@ use App\Service\Product\ImageHandler;
 use Doctrine\ORM\Mapping as ORM;
 use Money\Money;
 use App\Converter\MoneyConverter;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -29,11 +30,15 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=128)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
      */
     private $shortDescription;
 
@@ -74,6 +79,8 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=16)
+     *
+     * @Assert\NotBlank()
      */
     private $phone;
 
@@ -81,6 +88,14 @@ class Product
      * @ORM\Column(type="smallint")
      */
     private $status = self::STATUS_PENDING;
+
+    /**
+     * Category
+     *
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $category;
 
     /**
      * Get object unique id
@@ -95,11 +110,11 @@ class Product
     /**
      * Set name
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return self
      */
-    public function setName($name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
         return $this;
@@ -110,7 +125,7 @@ class Product
      *
      * @return string
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -118,11 +133,11 @@ class Product
     /**
      * Set short description
      *
-     * @param string $shortDescription
+     * @param string|null $shortDescription
      *
      * @return self
      */
-    public function setShortDescription($shortDescription): self
+    public function setShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
         return $this;
@@ -133,7 +148,7 @@ class Product
      *
      * @return string
      */
-    public function getShortDescription(): ?string
+    public function getShortDescription(): string
     {
         return $this->shortDescription;
     }
@@ -141,11 +156,11 @@ class Product
     /**
      * Set user
      *
-     * @param User $user
+     * @param User|null $user
      *
      * @return self
      */
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
         return $this;
@@ -154,7 +169,7 @@ class Product
     /**
      * Get user
      *
-     * @return User
+     * @return User|null
      */
     public function getUser(): ?User
     {
@@ -177,7 +192,7 @@ class Product
     /**
      * Get image file name
      *
-     * @return string
+     * @return string|null
      */
     public function getImageFilename(): ?string
     {
@@ -201,9 +216,9 @@ class Product
     /**
      * Get price
      *
-     * @return Money
+     * @return Money|null
      */
-    public function getPrice()
+    public function getPrice(): ?Money
     {
         return $this->price;
     }
@@ -223,12 +238,13 @@ class Product
     /**
      * Set fake price
      *
-     * @param int $fakePrice
+     * @param int|null $fakePrice
      *
      * @return self
      */
-    public function setFakePrice(int $fakePrice): self
+    public function setFakePrice(?int $fakePrice): self
     {
+        $fakePrice = is_null($fakePrice) ? 0 : $fakePrice;
         $this->setPrice($fakePrice, $this->getCurrency());
 
         return $this;
@@ -239,7 +255,7 @@ class Product
      *
      * @return int
      */
-    public function getFakePrice()
+    public function getFakePrice(): int
     {
         $price = $this->getPrice();
 
@@ -255,7 +271,7 @@ class Product
     {
         $price = $this->getPrice();
 
-        return MoneyConverter::getFormattedMoney($price);
+        return $price ? MoneyConverter::getFormattedMoney($price) : '';
     }
 
     /**
@@ -294,7 +310,7 @@ class Product
      *
      * @return self
      */
-    public function setIsRemoveImage($isRemoveImage): self
+    public function setIsRemoveImage(bool $isRemoveImage): self
     {
         $this->isRemoveImage = $isRemoveImage;
         return $this;
@@ -305,7 +321,7 @@ class Product
      *
      * @return boolean
      */
-    public function getIsRemoveImage(): ?bool
+    public function getIsRemoveImage(): bool
     {
         return $this->isRemoveImage;
     }
@@ -315,7 +331,7 @@ class Product
      *
      * @return string
      */
-    public function getPhone(): ?string
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -323,11 +339,11 @@ class Product
     /**
      * Set phone
      *
-     * @param string $phone
+     * @param string|null $phone
      *
      * @return self
      */
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
@@ -406,5 +422,28 @@ class Product
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Category|null $category
+     *
+     * @return self
+     */
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
     }
 }

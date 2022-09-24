@@ -4,5 +4,11 @@
 
 <form class="search_form" method="get" action="{{ path(searchFormRouteName) }}">
     <input type="text" id="search_form_substring" placeholder="Search items" value="{{ searchFormSubstringValue }}" name="substring"  class="form-control" />
+    <select name="categoryId" class="form-control select2">
+        <option value="">All Categories</option>
+        {% for searchFormCategory in searchFormCategories %}
+            <option value="{{ searchFormCategory.getId() }}"{% if searchFormCategory.getId() == searchFormCategoryIdValue %} selected="selected"{% endif %}>{{ searchFormCategory.getName() }}</option>
+        {% endfor %}
+    </select>
     <button class="btn btn-primary search">Search</button>
 </form>

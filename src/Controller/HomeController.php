@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class HomeController extends AbstractController
      *
      * @Route("/{page<\d+>}", name="app_home")
      * @param ProductRepository $productRepository
+     * @param CategoryRepository $categoryRepository
      * @param Request $request
      * @param RequestManager $requestManager
      * @param PaginatorInterface $paginator
@@ -31,12 +33,18 @@ class HomeController extends AbstractController
      */
     public function index(
         ProductRepository $productRepository,
+        CategoryRepository $categoryRepository,
         Request $request,
         RequestManager $requestManager,
         PaginatorInterface $paginator,
         int $page = 1
     ): Response
     {
+        $categoryId = $request->query->get('categoryId');
+        if ($categoryId && !$categoryRepository->isValidCategory((int)$categoryId)) {
+            $request = $requestManager->unsetGetParameter($request, 'categoryId');
+        }
+
         if (!$requestManager->isAllGetParametersValid($request)) {
             return $this->redirectToRoute(
                 'app_home',
@@ -46,11 +54,11 @@ class HomeController extends AbstractController
                 )
             );
         }
-        $products = $this->getProducts($productRepository, $request, $paginator, $page);
 
         return $this->render('home/index.html.twig',
             [
-                'products' => $products,
+                'products' => $this->getProducts($productRepository, $request, $paginator, $page),
+                'categories' => $categoryRepository->findAll(),
                 'page' => $page,
                 'isUserExperience' => false,
                 'sortItems' => $this->getSortItems($request)
@@ -79,6 +87,9 @@ class HomeController extends AbstractController
             ->addStatusCondition($productRepository->defineFindAllQuery(), Product::STATUS_APPROVED);
         if ($substring = $request->query->get('substring')) {
             $productsQuery = $productRepository->addSubstringCondition($productsQuery, $substring);
+        }
+        if ($categoryId = $request->query->get('categoryId')) {
+            $productsQuery = $productRepository->addCategoryIdCondition($productsQuery, $categoryId);
         }
 
         return $paginator->paginate(

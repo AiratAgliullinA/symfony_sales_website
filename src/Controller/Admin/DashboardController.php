@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -40,5 +41,6 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::section('Content');
         yield MenuItem::linkToCrud('Products', 'fa fa-list', Product::class);
+        yield MenuItem::linkToCrud('Categories', 'fa fa-list', Category::class);
     }
 }

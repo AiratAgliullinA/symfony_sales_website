@@ -83,6 +83,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $user->setPassword($newHashedPassword);
 
-        $this->add($user, true);
+        $this->add($user);
     }
 }

@@ -7,6 +7,6 @@ $(document).ready(function() {
         const productForm = $(this).closest('.product-form');
         productForm.find('.product-form__uploaded-image').hide(500);
         productForm.find('.product-form__upload-image').show(500);
-        $('#product_form_isRemoveImage').val(1);
+        $('#product_form_isRemoveImage').val(true);
     });
 });

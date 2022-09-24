@@ -17,7 +17,9 @@
             {{ include('forms/search.html.twig',
                 {
                     'searchFormRouteName': 'app_home',
-                    'searchFormSubstringValue': app.request.query.get('substring')
+                    'searchFormSubstringValue': app.request.query.get('substring'),
+                    'searchFormCategories': categories,
+                    'searchFormCategoryIdValue': app.request.query.get('categoryId')
                 }
             ) }}
         </div>

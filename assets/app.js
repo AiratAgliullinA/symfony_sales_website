@@ -15,6 +15,7 @@ import './styles/app.scss';
 
 import 'bootstrap';
 import Inputmask from 'inputmask';
+import 'select2';
 import './scripts/product_form';
 import './scripts/products_list';
 
@@ -23,4 +24,5 @@ import './bootstrap';
 
 $(document).ready(function() {
     Inputmask().mask($('.input-mask'));
+    $('select.select2').select2();
 });
